@@ -8,7 +8,6 @@ import java.awt.geom.*;
 import java.awt.Color;
 
 /** @author Ramandeep Johal
-  * a1
   * A Simple pacman like game where the predotor is controlled by the player
   * the predaotor is controlled by the left and right mouse buttons
   * left button - turn left
