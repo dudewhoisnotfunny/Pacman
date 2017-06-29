@@ -1,0 +1,63 @@
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import java.awt.geom.*;
+import java.awt.Dimension ;
+import java.awt.Color;
+import java.awt.Label;
+import java.util.ArrayList ;
+import java.util.Random ;
+import java.awt.event.MouseListener ;
+import java.awt.event.MouseAdapter ;
+import java.awt.event.MouseEvent ;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.Timer;
+import javax.swing.*;
+
+public class TimerPanel extends JPanel
+{  
+  
+  
+  public TimerPanel()
+  {
+     
+    add(new Label(gameTime));
+    
+    class TimerListener implements ActionListener
+    {
+      public void actionPerformed(ActionEvent event)
+      {
+        elapsedTime = System.currentTimeMillis() - startTime;
+        elapsedSeconds = elapsedTime / 1000;
+        secondsDisplay = elapsedSeconds % 60;
+        elapsedMinutes = elapsedSeconds / 60;
+        gameTime = elapsedMinutes + ":" + secondsDisplay;
+        //System.out.println(gameTime);
+        
+        repaint();
+      } 
+    }
+    
+    // Create ActionListener object for the Timer
+    ActionListener timerListener = new TimerListener();
+    final int DELAY = 10; // Milliseconds between timer ticks
+    // Create Timer and attach timer listener object
+    final Timer timer = new Timer(DELAY, timerListener);
+    
+    startTime = System.currentTimeMillis();
+    timer.start();
+    
+  } 
+  
+  public void paintComponent(Graphics g)
+  {  
+    super.paintComponent(g) ;
+    Graphics2D g2 = (Graphics2D) g;
+
+    
+  }
+} 

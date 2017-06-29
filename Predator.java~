@@ -1,0 +1,120 @@
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.geom.*;
+import java.awt.Color;
+
+/** Predator extends Creature
+  * models a pacman like predator
+  * its directin can be controlled
+  */
+public class Predator extends Creature
+{
+  //Default direction is north(up)
+  private String direction = "north";
+  //size of the predator
+  private final int PREDATOR_SIZE = 60;
+  //Speed of the predator
+  private final int PREDATOR_SPEED = 2;
+  //Body of the predator
+  private Ellipse2D.Double body;
+  
+  /** Constructs a predator at the given x and y coordinates
+    * @parma x the X coordinate of the predators spawn
+    * @param y the Y coordinate of the predators spawn
+    */
+  public Predator(int x, int y)
+  {
+    super(x, y);
+    body = new Ellipse2D.Double(x, y, PREDATOR_SIZE, PREDATOR_SIZE);
+  }
+  
+  /** changes the Predators direction to whatever direction is to the right
+    * north -> east
+    * east -> south
+    * south -> west
+    * west -> north
+    */
+  public void turnRight()
+  {
+    switch (direction){
+      case "north" : direction = "east";
+      break;
+      
+      case "east" : direction = "south";
+      break;
+      
+      case "south" : direction = "west";
+      break;
+      
+      case "west" : direction = "north";
+      break;
+    }
+  }
+  
+  /** changes the Predators direction to whatever direction is to the left
+    * north -> west
+    * east -> north
+    * south -> east
+    * west -> south
+    */
+  public void turnLeft()
+  {
+    switch (direction){
+      case "north" : direction = "west";
+      break;
+      
+      case "east" : direction = "north";
+      break;
+      
+      case "south" : direction = "east";
+      break;
+      
+      case "west" : direction = "south";
+      break;
+    }
+  }
+  
+  /** updates the predators postition according to the direction variable
+    */
+  public void move()
+  {
+    switch (direction){
+      case "north" : body = new Ellipse2D.Double(body.getX(), body.getY() - PREDATOR_SPEED, PREDATOR_SIZE, PREDATOR_SIZE);
+      break;
+      case "south" : body = new Ellipse2D.Double(body.getX(), body.getY() + PREDATOR_SPEED, PREDATOR_SIZE, PREDATOR_SIZE);
+      break;
+      case "east" : body = new Ellipse2D.Double(body.getX() + PREDATOR_SPEED, body.getY(), PREDATOR_SIZE, PREDATOR_SIZE);
+      break;
+      case "west" : body = new Ellipse2D.Double(body.getX() - PREDATOR_SPEED, body.getY(), PREDATOR_SIZE, PREDATOR_SIZE);
+      break;
+    }
+  }
+  
+  /** draws the Predator on screen in black
+    * @param g2 the graphics component to draw the predator
+    */
+  public void draw(Graphics2D g2)
+  {
+    g2.setColor(Color.BLACK);
+    g2.fill(body);
+  }
+  
+  /** returns a rectangle that bounds the predator
+    * @return bouding rectangle
+    */
+  public Rectangle getBounds()
+  {
+    return body.getBounds();
+  }
+  
+  /** Uses the getBounds method to determine if this creature is in contact with another creature
+    * @return True if the creature is in contact with another Moveable Shape false otherwise
+    */
+  public boolean collides(MoveableShape other)
+  {
+    return this.getBounds().intersects(other.getBounds());
+    
+  }
+  
+}
